@@ -66,9 +66,9 @@ def start(message):
     caption = """
 🎁 Welcome To ClaimKart Bot
 
-⚡ Demo Gift Center
+⚡ Vouchers Gifts Code
 🔒 Secure Access System
-🎮 Entertainment Purpose Only
+🎮 Easy To Use 
 
 📢 Join Channels To Continue
 """
@@ -130,7 +130,7 @@ def verify(call):
 
             keyboard.add(
                 InlineKeyboardButton(
-                    "🎁 Get Demo Codes",
+                    "🎁 Get Voucher Codes",
                     callback_data="gifts"
                 )
             )
@@ -151,11 +151,11 @@ def verify(call):
 
 🎁 Welcome To ClaimKart Bot
 
-🛒 Demo Vouchers
-🎮 Sample Redeem Codes
-⚡ Premium Gift Center
+🛒 Real Vouchers Gifts
+🎮 Daily bonus: +1 Code every 24h
+⚡ Flipkart,Amazon, Play Store Available 
 
-⚠️ Entertainment Purpose Only
+• 👥 Invite friends: +1 Point per referral
 """
 
             bot.send_photo(
@@ -193,21 +193,21 @@ def gifts(call):
 
     keyboard.add(
         InlineKeyboardButton(
-            "🛒 Flipkart Demo Voucher",
+            "🛒 Flipkart Voucher",
             callback_data="flipkart"
         )
     )
 
     keyboard.add(
         InlineKeyboardButton(
-            "📦 Amazon Demo Voucher",
+            "📦 Amazon Voucher",
             callback_data="amazon"
         )
     )
 
     keyboard.add(
         InlineKeyboardButton(
-            "🎮 Play Demo Code",
+            "🎮 Reedem Code",
             callback_data="play"
         )
     )
@@ -238,14 +238,14 @@ def flipkart(call):
     )
 
     text = f"""
-🛒 Flipkart Demo Voucher
+🛒 Flipkart Voucher
 
 ━━━━━━━━━━━━━━
 Code : {code}
 Pin  : {pin}
 ━━━━━━━━━━━━━━
 
-⚠️ Demo / Entertainment Purpose Only
+⚠️ Refer & Earn Big Voucher Codes
 """
 
     bot.send_message(
@@ -271,14 +271,14 @@ def amazon(call):
     )
 
     text = f"""
-📦 Amazon Demo Voucher
+📦 Amazon Voucher
 
 ━━━━━━━━━━━━━━
 Code : {code}
 Pin  : {pin}
 ━━━━━━━━━━━━━━
 
-⚠️ Demo / Entertainment Purpose Only
+⚠️ Refer & Earn Big Voucher Codes
 """
 
     bot.send_message(
@@ -304,13 +304,13 @@ def play(call):
     )
 
     text = f"""
-🎮 Play Demo Redeem Code
+🎮 Redeem Code
 
 ━━━━━━━━━━━━━━
 {code}
 ━━━━━━━━━━━━━━
 
-⚠️ Demo / Entertainment Purpose Only
+⚠️ Refer & Earn Big Voucher Codes
 """
 
     bot.send_message(
@@ -329,7 +329,7 @@ def daily(call):
         """
 🎉 Daily Reward Claimed
 
-💎 +10 Points Added
+💎 +1 Points Added
 """
     )
 
