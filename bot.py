@@ -3,7 +3,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 import time
 
-TOKEN = "8615004462:AAF1YmbE0-NWSWPPp6Bpvpr6DpRKYoaXKAk"
+TOKEN = "8479393909:AAHDy-2v0fWSZe1SoGuCUI7PBYFOVilLqcU"
 
 bot = telebot.TeleBot(TOKEN)
 
