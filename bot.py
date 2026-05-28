@@ -7,27 +7,32 @@ TOKEN = "8615004462:AAF1YmbE0-NWSWPPp6Bpvpr6DpRKYoaXKAk"
 
 bot = telebot.TeleBot(TOKEN)
 
-CHANNEL_1 = "@latestmodsapks"
-CHANNEL_2 = "@latestmodsapp"
+CHANNEL_1 = "@https://latestmodsapp"
+CHANNEL_2 = "@https://latestmodsapks"
 
 WELCOME_IMAGE = "https://i.imgur.com/8Km9tLL.png"
+
+# ================= DEMO CODES =================
 
 flipkart_codes = [
     ("FK-82JS-91KQ", "483726"),
     ("FK-1ASD-9KLM", "817263"),
-    ("FK-XX12-ZQWE", "918273")
+    ("FK-XX12-ZQWE", "918273"),
+    ("FK-QWER-TYUI", "726352")
 ]
 
 amazon_codes = [
     ("AMZ-9QWE-1ZXC", "726352"),
     ("AMZ-7TYU-4BNM", "182736"),
-    ("AMZ-5JKL-2POI", "918273")
+    ("AMZ-5JKL-2POI", "918273"),
+    ("AMZ-ASDF-GHJK", "827364")
 ]
 
 play_codes = [
     "ABCD-EFGH-IJKL-MNOP",
     "QWER-TYUI-OPAS-DFGH",
-    "ZXCV-BNMK-LQWE-RTYU"
+    "ZXCV-BNMK-LQWE-RTYU",
+    "PLMK-OIJN-UHBY-GTVF"
 ]
 
 # ================= START =================
@@ -61,9 +66,9 @@ def start(message):
     caption = """
 🎁 Welcome To ClaimKart Bot
 
-⚡  Free Gift Center
+⚡ Demo Gift Center
 🔒 Secure Access System
-🎮 Invite Freind & Get More
+🎮 Entertainment Purpose Only
 
 📢 Join Channels To Continue
 """
@@ -90,17 +95,21 @@ def verify(call):
 
             msg = bot.send_message(
                 call.message.chat.id,
-                "🔄 Verifying User...
+                """
+🔄 Verifying User...
 
-▓▓░░░░░░ 20%"
+▓▓░░░░░░ 20%
+"""
             )
 
             time.sleep(1)
 
             bot.edit_message_text(
-                "🔄 Verifying User...
+                """
+🔄 Verifying User...
 
-▓▓▓▓▓░░░ 60%",
+▓▓▓▓▓░░░ 60%
+""",
                 call.message.chat.id,
                 msg.message_id
             )
@@ -108,9 +117,11 @@ def verify(call):
             time.sleep(1)
 
             bot.edit_message_text(
-                "✅ Verification Successful
+                """
+✅ Verification Successful
 
-▓▓▓▓▓▓▓▓ 100%",
+▓▓▓▓▓▓▓▓ 100%
+""",
                 call.message.chat.id,
                 msg.message_id
             )
@@ -118,12 +129,21 @@ def verify(call):
             keyboard = InlineKeyboardMarkup(row_width=2)
 
             keyboard.add(
-                InlineKeyboardButton("🎁 Get Free Codes", callback_data="gifts")
+                InlineKeyboardButton(
+                    "🎁 Get Demo Codes",
+                    callback_data="gifts"
+                )
             )
 
             keyboard.add(
-                InlineKeyboardButton("🎉 Daily Reward", callback_data="daily"),
-                InlineKeyboardButton("👥 Refer & Earn", callback_data="refer")
+                InlineKeyboardButton(
+                    "🎉 Daily Reward",
+                    callback_data="daily"
+                ),
+                InlineKeyboardButton(
+                    "👥 Refer & Earn",
+                    callback_data="refer"
+                )
             )
 
             caption = """
@@ -131,11 +151,11 @@ def verify(call):
 
 🎁 Welcome To ClaimKart Bot
 
-🛒 Premium Vouchers
+🛒 Demo Vouchers
 🎮 Sample Redeem Codes
 ⚡ Premium Gift Center
 
-⚠️  Verified & Secure 2024@
+⚠️ Entertainment Purpose Only
 """
 
             bot.send_photo(
@@ -164,27 +184,40 @@ def gifts(call):
 
     bot.send_message(
         call.message.chat.id,
-        "🎁 Opening Gift Center..."
+        """
+🎁 Opening Gift Center...
+"""
     )
 
     keyboard = InlineKeyboardMarkup(row_width=1)
 
     keyboard.add(
-        InlineKeyboardButton("🛒 Flipkart Voucher", callback_data="flipkart")
+        InlineKeyboardButton(
+            "🛒 Flipkart Demo Voucher",
+            callback_data="flipkart"
+        )
     )
 
     keyboard.add(
-        InlineKeyboardButton("📦 Amazon Voucher", callback_data="amazon")
+        InlineKeyboardButton(
+            "📦 Amazon Demo Voucher",
+            callback_data="amazon"
+        )
     )
 
     keyboard.add(
-        InlineKeyboardButton("🎮 Reedem Code", callback_data="play")
+        InlineKeyboardButton(
+            "🎮 Play Demo Code",
+            callback_data="play"
+        )
     )
 
     bot.send_photo(
         call.message.chat.id,
         WELCOME_IMAGE,
-        caption="🎁 Select Gift Category",
+        caption="""
+🎁 Select Gift Category
+""",
         reply_markup=keyboard
     )
 
@@ -195,21 +228,24 @@ def flipkart(call):
 
     code, pin = random.choice(flipkart_codes)
 
-    keyboard = InlineKeyboardMarkup(row_width=2)
+    keyboard = InlineKeyboardMarkup(row_width=1)
 
     keyboard.add(
-        InlineKeyboardButton("🔄 Generate New", callback_data="flipkart")
+        InlineKeyboardButton(
+            "🔄 Generate New",
+            callback_data="flipkart"
+        )
     )
 
     text = f"""
-🛒 Flipkart Voucher
+🛒 Flipkart Demo Voucher
 
 ━━━━━━━━━━━━━━
 Code : {code}
 Pin  : {pin}
 ━━━━━━━━━━━━━━
 
-⚠️ Refer & Earn Big 
+⚠️ Demo / Entertainment Purpose Only
 """
 
     bot.send_message(
@@ -225,21 +261,24 @@ def amazon(call):
 
     code, pin = random.choice(amazon_codes)
 
-    keyboard = InlineKeyboardMarkup(row_width=2)
+    keyboard = InlineKeyboardMarkup(row_width=1)
 
     keyboard.add(
-        InlineKeyboardButton("🔄 Generate New", callback_data="amazon")
+        InlineKeyboardButton(
+            "🔄 Generate New",
+            callback_data="amazon"
+        )
     )
 
     text = f"""
-📦 Amazon Voucher
+📦 Amazon Demo Voucher
 
 ━━━━━━━━━━━━━━
 Code : {code}
 Pin  : {pin}
 ━━━━━━━━━━━━━━
 
-⚠️ Refer & Earn Big Codes
+⚠️ Demo / Entertainment Purpose Only
 """
 
     bot.send_message(
@@ -255,20 +294,23 @@ def play(call):
 
     code = random.choice(play_codes)
 
-    keyboard = InlineKeyboardMarkup(row_width=2)
+    keyboard = InlineKeyboardMarkup(row_width=1)
 
     keyboard.add(
-        InlineKeyboardButton("🔄 Generate New", callback_data="play")
+        InlineKeyboardButton(
+            "🔄 Generate New",
+            callback_data="play"
+        )
     )
 
     text = f"""
-🎮 Redeem Code
+🎮 Play Demo Redeem Code
 
 ━━━━━━━━━━━━━━
 {code}
 ━━━━━━━━━━━━━━
 
-⚠️ Refer & Earn Big Reedem
+⚠️ Demo / Entertainment Purpose Only
 """
 
     bot.send_message(
@@ -284,9 +326,11 @@ def daily(call):
 
     bot.send_message(
         call.message.chat.id,
-        "🎉 Daily Reward Claimed
+        """
+🎉 Daily Reward Claimed
 
-💎 +10 Points Added"
+💎 +10 Points Added
+"""
     )
 
 # ================= REFER =================
@@ -300,11 +344,15 @@ def refer(call):
 
     bot.send_message(
         call.message.chat.id,
-        f"👥 Refer Friends & Earn Points
+        f"""
+👥 Refer Friends & Earn
 
 🔗 Your Referral Link:
-{link}"
+
+{link}
+"""
     )
 
 print("🎁 ClaimKart Bot Running...")
+
 bot.infinity_polling()
