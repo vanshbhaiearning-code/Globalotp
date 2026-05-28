@@ -7,8 +7,8 @@ TOKEN = "8615004462:AAF1YmbE0-NWSWPPp6Bpvpr6DpRKYoaXKAk"
 
 bot = telebot.TeleBot(TOKEN)
 
-CHANNEL_1 = "@https://latestmodsapp"
-CHANNEL_2 = "@https://latestmodsapks"
+CHANNEL_1 = "@latestmodsapp"
+CHANNEL_2 = "@latestmodsapks"
 
 WELCOME_IMAGE = "https://i.imgur.com/8Km9tLL.png"
 
