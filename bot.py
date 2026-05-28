@@ -10,7 +10,7 @@ bot = telebot.TeleBot(TOKEN)
 CHANNEL_1 = "@latestmodsapp"
 CHANNEL_2 = "@latestmodsapks"
 
-WELCOME_IMAGE = "https://i.imgur.com/8Km9tLL.png"
+WELCOME_IMAGE = "https://i.ibb.co/9HYXy6Gt/file-000000000ad0720bad9aaa719ac271dd.png"
 
 # ================= DEMO CODES =================
 
