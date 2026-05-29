@@ -4,38 +4,52 @@ import random
 import time
 
 TOKEN = "8479393909:AAHDy-2v0fWSZe1SoGuCUI7PBYFOVilLqcU"
+
 ADMIN_ID = 6692986333
+
 users = set()
 broadcast_mode = {}
 
 bot = telebot.TeleBot(TOKEN)
 
-CHANNEL_1 = "@latestmodsapp"
-CHANNEL_2 = "@latestmodsapks"
+CHANNEL_1 = "@latestmodsapks"
+CHANNEL_2 = "@latestmodsapp"
 
 WELCOME_IMAGE = "https://i.ibb.co/9HYXy6Gt/file-000000000ad0720bad9aaa719ac271dd.png"
 
 # ================= DEMO CODES =================
 
 flipkart_codes = [
-    ("FK-82JS-91KQ", "483726"),
-    ("FK-1ASD-9KLM", "817263"),
-    ("FK-XX12-ZQWE", "918273"),
-    ("FK-QWER-TYUI", "726352")
+    ("FKRT-9X2P-LM7Q-4K8D", "1087"),
+    ("FLIP-7H3N-Q2WX-8P5T", "8098"),
+    ("GIFT-4K9M-ZX7P-1LQ2", "5076"),
+    ("FKVC-8P2L-MN5X-Q7D1", "4243"),
+    ("SHOP-3X7Q-KL9P-2MN8", "2342"),
+    ("FPKT-6Z1L-QW8N-5PX2", "0952"),
+    ("CARD-9M4X-PL7Q-2KD8", "8752"),
+    ("FKGC-2Q8P-LN5X-7MT1", "6302"),
+    ("SAVE-5X9L-QP2N-8KD4", "2652"),
+    ("FLPK-7N3Q-MX8L-1PT5", "7262")
 ]
 
 amazon_codes = [
-    ("AMZ-9QWE-1ZXC", "726352"),
-    ("AMZ-7TYU-4BNM", "182736"),
-    ("AMZ-5JKL-2POI", "918273"),
-    ("AMZ-ASDF-GHJK", "827364")
+    ("AMAZ-7K2P-XQ9L-4MN8", "7872"),
+    ("GIFT-3L9X-QP2N-7KD5", "1276"),
+    ("AMZN-8P4L-MX7Q-2NT1", "9183"),
+    ("SHOP-5Q2X-LN8P-4MK7", "8264"),
+    ("CARD-9M7L-XP3Q-5KD2", "8264"),
+    ("AMAZ-2N8Q-PL4X-7MT5", "8264"),
+    ("PRIME-9Q3X-LK5P-2MN7", "8264"),
+    ("GCODE-7M2L-XQ8P-4NT5", "8264"),
+    ("AMGC-4P7L-MN2X-8QT1", "8264"),
+    ("SAVE-6X1L-QP9N-3KD8", "8264")
 ]
 
 play_codes = [
-    "ABCD-EFGH-IJKL-MNOP",
-    "QWER-TYUI-OPAS-DFGH",
-    "ZXCV-BNMK-LQWE-RTYU",
-    "PLMK-OIJN-UHBY-GTVF"
+    "ABCDEFGHIJKLMNOP",
+    "QWERTYUIOPASDFGH",
+    "ZXCVBNMK-LQWERTYU",
+    "PLMKOIJN-UHBYGTVF"
 ]
 
 # ================= START =================
@@ -73,7 +87,7 @@ def start(message):
 
 ⚡ Vouchers Gifts Code
 🔒 Secure Access System
-🎮 Easy To Use 
+🎮 Easy To Use
 
 📢 Join Channels To Continue
 """
@@ -158,7 +172,7 @@ def verify(call):
 
 🛒 Real Vouchers Gifts
 🎮 Daily bonus: +1 Code every 24h
-⚡ Flipkart,Amazon, Play Store Available 
+⚡ Flipkart, Amazon, Play Store Available
 
 • 👥 Invite friends: +1 Point per referral
 """
@@ -212,7 +226,7 @@ def gifts(call):
 
     keyboard.add(
         InlineKeyboardButton(
-            "🎮 Reedem Code",
+            "🎮 Redeem Code",
             callback_data="play"
         )
     )
@@ -357,7 +371,10 @@ def refer(call):
 {link}
 """
     )
-    @bot.message_handler(commands=['panel'])
+
+# ================= ADMIN PANEL =================
+
+@bot.message_handler(commands=['panel'])
 def panel(message):
 
     if message.from_user.id != ADMIN_ID:
@@ -366,12 +383,21 @@ def panel(message):
     keyboard = InlineKeyboardMarkup(row_width=2)
 
     keyboard.add(
-        InlineKeyboardButton("📢 Broadcast", callback_data="broadcast"),
-        InlineKeyboardButton("📊 Bot Stats", callback_data="stats")
+        InlineKeyboardButton(
+            "📢 Broadcast",
+            callback_data="broadcast"
+        ),
+        InlineKeyboardButton(
+            "📊 Bot Stats",
+            callback_data="stats"
+        )
     )
 
     keyboard.add(
-        InlineKeyboardButton("👥 Total Users", callback_data="users")
+        InlineKeyboardButton(
+            "👥 Total Users",
+            callback_data="users"
+        )
     )
 
     bot.send_message(
@@ -379,7 +405,10 @@ def panel(message):
         "⚙️ Admin Control Panel",
         reply_markup=keyboard
     )
-    @bot.callback_query_handler(func=lambda call: call.data == "users")
+
+# ================= TOTAL USERS =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "users")
 def total_users(call):
 
     if call.from_user.id != ADMIN_ID:
@@ -389,7 +418,10 @@ def total_users(call):
         call.message.chat.id,
         f"👥 Total Users: {len(users)}"
     )
-    @bot.callback_query_handler(func=lambda call: call.data == "stats")
+
+# ================= BOT STATS =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "stats")
 def stats(call):
 
     if call.from_user.id != ADMIN_ID:
@@ -408,7 +440,10 @@ def stats(call):
         call.message.chat.id,
         text
     )
-    @bot.callback_query_handler(func=lambda call: call.data == "broadcast")
+
+# ================= BROADCAST =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "broadcast")
 def broadcast(call):
 
     if call.from_user.id != ADMIN_ID:
@@ -421,7 +456,7 @@ def broadcast(call):
         "📢 Send broadcast message now"
     )
 
-print("🎁 ClaimKart Bot Running...")
+# ================= ADMIN MESSAGE =================
 
 @bot.message_handler(func=lambda m: m.from_user.id == ADMIN_ID)
 def admin_messages(message):
@@ -443,4 +478,7 @@ def admin_messages(message):
             message.chat.id,
             f"✅ Broadcast sent to {success} users"
         )
+
+print("🎁 ClaimKart Bot Running...")
+
 bot.infinity_polling()
