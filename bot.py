@@ -4,6 +4,9 @@ import random
 import time
 
 TOKEN = "8479393909:AAHDy-2v0fWSZe1SoGuCUI7PBYFOVilLqcU"
+ADMIN_ID = 6692986333
+users = set()
+broadcast_mode = {}
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -352,7 +355,90 @@ def refer(call):
 {link}
 """
     )
+    @bot.message_handler(commands=['panel'])
+def panel(message):
+
+    if message.from_user.id != ADMIN_ID:
+        return
+
+    keyboard = InlineKeyboardMarkup(row_width=2)
+
+    keyboard.add(
+        InlineKeyboardButton("📢 Broadcast", callback_data="broadcast"),
+        InlineKeyboardButton("📊 Bot Stats", callback_data="stats")
+    )
+
+    keyboard.add(
+        InlineKeyboardButton("👥 Total Users", callback_data="users")
+    )
+
+    bot.send_message(
+        message.chat.id,
+        "⚙️ Admin Control Panel",
+        reply_markup=keyboard
+    )
+    @bot.callback_query_handler(func=lambda call: call.data == "users")
+def total_users(call):
+
+    if call.from_user.id != ADMIN_ID:
+        return
+
+    bot.send_message(
+        call.message.chat.id,
+        f"👥 Total Users: {len(users)}"
+    )
+    @bot.callback_query_handler(func=lambda call: call.data == "stats")
+def stats(call):
+
+    if call.from_user.id != ADMIN_ID:
+        return
+
+    text = f'''
+📊 Bot Statistics
+
+👥 Users : {len(users)}
+
+🟢 Status : Online
+⚡ System : Active
+'''
+
+    bot.send_message(
+        call.message.chat.id,
+        text
+    )
+    @bot.callback_query_handler(func=lambda call: call.data == "broadcast")
+def broadcast(call):
+
+    if call.from_user.id != ADMIN_ID:
+        return
+
+    broadcast_mode[call.from_user.id] = True
+
+    bot.send_message(
+        call.message.chat.id,
+        "📢 Send broadcast message now"
+    )
 
 print("🎁 ClaimKart Bot Running...")
 
+@bot.message_handler(func=lambda m: m.from_user.id == ADMIN_ID)
+def admin_messages(message):
+
+    if broadcast_mode.get(message.from_user.id):
+
+        success = 0
+
+        for user in users:
+            try:
+                bot.send_message(user, message.text)
+                success += 1
+            except:
+                pass
+
+        broadcast_mode[message.from_user.id] = False
+
+        bot.send_message(
+            message.chat.id,
+            f"✅ Broadcast sent to {success} users"
+        )
 bot.infinity_polling()
