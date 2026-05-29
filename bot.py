@@ -43,6 +43,8 @@ play_codes = [
 @bot.message_handler(commands=['start'])
 def start(message):
 
+    users.add(message.chat.id)
+
     keyboard = InlineKeyboardMarkup(row_width=1)
 
     keyboard.add(
