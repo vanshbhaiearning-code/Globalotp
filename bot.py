@@ -448,7 +448,6 @@ kathikathi@ptyes
             f"❌ Error:\n{e}"
         )
 
-
 # ================= LIFETIME =================
 
 @bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
@@ -459,9 +458,9 @@ def sub_lifetime(call):
     try:
 
         bot.send_photo(
-    call.message.chat.id,
-    open("qr.jpg", "rb"),
-    caption="""
+            call.message.chat.id,
+            open("qr.jpg", "rb"),
+            caption="""
 ♾ Lifetime Subscription
 
 💰 Amount : ₹1000
@@ -482,6 +481,15 @@ kathikathi@ptyes
 ━━━━━━━━━━━━━━
 """
         )
+
+    except Exception as e:
+
+        bot.send_message(
+            call.message.chat.id,
+            f"❌ Error:\n{e}"
+        )
+
+
 
 # ================= ADMIN PANEL =================
 
