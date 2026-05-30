@@ -459,9 +459,9 @@ def sub_lifetime(call):
     try:
 
         bot.send_photo(
-            call.message.chat.id,
-            open("qr.jpg", "rb"),
-            caption="""
+    call.message.chat.id,
+    open("qr.jpg", "rb"),
+    caption="""
 ♾ Lifetime Subscription
 
 💰 Amount : ₹1000
@@ -476,6 +476,12 @@ kathikathi@ptyes
 2️⃣ Pay ₹1000
 
 3️⃣ Send Screenshot Here
+
+4️⃣ Wait For Admin Approval
+
+━━━━━━━━━━━━━━
+"""
+        )
 
 # ================= ADMIN PANEL =================
 
