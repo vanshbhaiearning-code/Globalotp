@@ -407,8 +407,6 @@ def subscription(call):
         reply_markup=keyboard
     )
 
-
-@bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
 @bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
 def sub_month(call):
 
@@ -424,7 +422,6 @@ def sub_month(call):
             call.message.chat.id,
             f"ERROR:\n{e}"
         )
-
 
 @bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
 @bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
