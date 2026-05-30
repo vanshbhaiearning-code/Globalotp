@@ -598,6 +598,41 @@ def admin_messages(message):
             f"✅ Broadcast sent to {success} users"
         )
 
+# ================= APPROVE PAYMENT =================
+@bot.message_handler(commands=['approve'])
+def approve(message):
+    ...
+
+# ================= DECLINE PAYMENT =================
+@bot.message_handler(commands=['decline'])
+def decline(message):
+    ...
+
+# ================= PAYMENT SCREENSHOT =================
+@bot.message_handler(content_types=['photo'])
+def payment_screenshot(message):
+
+    if message.from_user.id == ADMIN_ID:
+        return
+
+    caption = f"""
+💰 New Payment Screenshot
+
+👤 User : {message.from_user.first_name}
+🆔 ID : {message.from_user.id}
+"""
+
+    bot.send_photo(
+        ADMIN_ID,
+        message.photo[-1].file_id,
+        caption=caption
+    )
+
+    bot.reply_to(
+        message,
+        "✅ Screenshot received.\nWaiting for admin approval."
+    )
+
         # ================= APPROVE PAYMENT =================
 
 @bot.message_handler(commands=['approve'])
