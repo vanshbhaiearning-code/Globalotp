@@ -164,6 +164,12 @@ def verify(call):
                     callback_data="refer"
                 )
             )
+            keyboard.add(
+    InlineKeyboardButton(
+        "💎 Buy Subscription",
+        callback_data="subscription"
+    )
+            )
 
             caption = """
 🎉 Verification Successful
@@ -370,6 +376,40 @@ def refer(call):
 
 {link}
 """
+    )
+
+# ================= SUBSCRIPTION =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "subscription")
+def subscription(call):
+
+    keyboard = InlineKeyboardMarkup(row_width=1)
+
+    keyboard.add(
+        InlineKeyboardButton(
+            "💳 Buy Now",
+            url="https://your-payment-link.com"
+        )
+    )
+
+    bot.send_message(
+        call.message.chat.id,
+        """
+💎 Premium Subscription
+
+📅 1 Month = ₹99
+📅 3 Months = ₹249
+📅 Lifetime = ₹499
+
+✅ Premium Benefits:
+• Unlimited Voucher Access
+• Premium Codes
+• Fast Updates
+• Priority Support
+
+Click below to purchase.
+""",
+        reply_markup=keyboard
     )
 
 # ================= ADMIN PANEL =================
