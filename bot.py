@@ -584,6 +584,39 @@ def admin_messages(message):
             f"✅ Broadcast sent to {success} users"
         )
 
+        # ================= APPROVE PAYMENT =================
+
+@bot.message_handler(commands=['approve'])
+def approve(message):
+
+    if message.from_user.id != ADMIN_ID:
+        return
+
+    try:
+        user_id = int(message.text.split()[1])
+
+        bot.send_message(
+            user_id,
+            """
+✅ Payment Approved
+
+💎 Subscription Activated Successfully.
+
+Thank you for purchasing.
+"""
+        )
+
+        bot.reply_to(
+            message,
+            f"✅ User {user_id} Approved Successfully"
+        )
+
+    except:
+        bot.reply_to(
+            message,
+            "Use:\n/approve USER_ID"
+        )
+
 # ================= DECLINE PAYMENT =================
 
 @bot.message_handler(commands=['decline'])
