@@ -377,111 +377,6 @@ def refer(call):
 {link}
 """
     )
-
-# ================= SUBSCRIPTION =================
-
-@bot.callback_query_handler(func=lambda call: call.data == "subscription")
-def subscription(call):
-
-    keyboard = InlineKeyboardMarkup(row_width=2)
-
-    keyboard.add(
-        InlineKeyboardButton(
-            "📅 1 Month ₹199",
-            callback_data="sub_1month"
-        ),
-        InlineKeyboardButton(
-            "♾ Lifetime ₹1000",
-            callback_data="sub_lifetime"
-        )
-    )
-
-    bot.send_message(
-        call.message.chat.id,
-        """
-💎 Choose Subscription Plan
-
-📅 1 Month = ₹199
-♾ Lifetime = ₹1000
-""",
-        reply_markup=keyboard
-    )
-
-
-# ================= 1 MONTH =================
-
-@bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
-def sub_month(call):
-
-    bot.answer_callback_query(call.id)
-
-    keyboard = InlineKeyboardMarkup()
-
-    keyboard.add(
-        InlineKeyboardButton(
-            "💳 Pay Now",
-            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=199&cu=INR"
-        )
-    )
-
-    try:
-
-        bot.send_photo(
-            call.message.chat.id,
-            open("qr.jpg", "rb"),
-            caption="""
-💎 1 Month Subscription
-
-💰 Amount : ₹199
-
-🏦 UPI ID :
-kathikathi@ptyes
-
-━━━━━━━━━━━━━━
-
-1️⃣ Scan QR Code
-
-2️⃣ Or Click Pay Now
-
-3️⃣ Complete Payment
-
-4️⃣ Send Screenshot Here
-
-5️⃣ Wait For Admin Approval
-
-━━━━━━━━━━━━━━
-""",
-            reply_markup=keyboard
-        )
-
-    except Exception as e:
-
-        bot.send_message(
-            call.message.chat.id,
-            f"❌ Error:\n{e}"
-        )
-
-
-# ================= LIFETIME =================
-
-@bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
-def sub_lifetime(call):
-
-    bot.answer_callback_query(call.id)
-
-    keyboard = InlineKeyboardMarkup()
-
-    keyboard.add(
-        InlineKeyboardButton(
-            "💳 Pay Now",
-            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=1000&cu=INR"
-        )
-    )
-
-    try:
-
-        bot.send_photo(
-            call.message.chat.id,
 # ================= SUBSCRIPTION =================
 
 @bot.callback_query_handler(func=lambda call: call.data == "subscription")
@@ -581,19 +476,6 @@ kathikathi@ptyes
 2️⃣ Pay ₹1000
 
 3️⃣ Send Screenshot Here
-
-4️⃣ Wait For Admin Approval
-
-━━━━━━━━━━━━━━
-"""
-        )
-
-    except Exception as e:
-
-        bot.send_message(
-            call.message.chat.id,
-            f"❌ Error:\n{e}"
-        )
 
 # ================= ADMIN PANEL =================
 
@@ -701,26 +583,6 @@ def admin_messages(message):
             message.chat.id,
             f"✅ Broadcast sent to {success} users"
         )
-
-@bot.message_handler(commands=['decline'])
-def decline(message):
-
-    if message.from_user.id != ADMIN_ID:
-        return
-
-    try:
-        user_id = int(message.text.split()[1])
-
-        bot.send_message(
-            user_id,
-            "❌ Payment Declined\n\nPlease contact admin if payment was successful."
-        )
-
-        bot.reply_to(message, "Declined Successfully")
-
-    except:
-        bot.reply_to(message, "Use:\n/decline USER_ID")
-
 
 # ================= DECLINE PAYMENT =================
 
