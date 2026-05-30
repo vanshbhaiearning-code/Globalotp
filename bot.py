@@ -482,6 +482,89 @@ def sub_lifetime(call):
 
         bot.send_photo(
             call.message.chat.id,
+# ================= SUBSCRIPTION =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "subscription")
+def subscription(call):
+
+    keyboard = InlineKeyboardMarkup(row_width=2)
+
+    keyboard.add(
+        InlineKeyboardButton(
+            "📅 1 Month ₹199",
+            callback_data="sub_1month"
+        ),
+        InlineKeyboardButton(
+            "♾ Lifetime ₹1000",
+            callback_data="sub_lifetime"
+        )
+    )
+
+    bot.send_message(
+        call.message.chat.id,
+        """
+💎 Choose Subscription Plan
+
+📅 1 Month = ₹199
+♾ Lifetime = ₹1000
+""",
+        reply_markup=keyboard
+    )
+
+
+# ================= 1 MONTH =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
+def sub_month(call):
+
+    bot.answer_callback_query(call.id)
+
+    try:
+
+        bot.send_photo(
+            call.message.chat.id,
+            open("qr.jpg", "rb"),
+            caption="""
+💎 1 Month Subscription
+
+💰 Amount : ₹199
+
+🏦 UPI ID :
+kathikathi@ptyes
+
+━━━━━━━━━━━━━━
+
+1️⃣ Scan QR Code
+
+2️⃣ Pay ₹199
+
+3️⃣ Send Screenshot Here
+
+4️⃣ Wait For Admin Approval
+
+━━━━━━━━━━━━━━
+"""
+        )
+
+    except Exception as e:
+
+        bot.send_message(
+            call.message.chat.id,
+            f"❌ Error:\n{e}"
+        )
+
+
+# ================= LIFETIME =================
+
+@bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
+def sub_lifetime(call):
+
+    bot.answer_callback_query(call.id)
+
+    try:
+
+        bot.send_photo(
+            call.message.chat.id,
             open("qr.jpg", "rb"),
             caption="""
 ♾ Lifetime Subscription
@@ -495,17 +578,14 @@ kathikathi@ptyes
 
 1️⃣ Scan QR Code
 
-2️⃣ Or Click Pay Now
+2️⃣ Pay ₹1000
 
-3️⃣ Complete Payment
+3️⃣ Send Screenshot Here
 
-4️⃣ Send Screenshot Here
-
-5️⃣ Wait For Admin Approval
+4️⃣ Wait For Admin Approval
 
 ━━━━━━━━━━━━━━
-""",
-            reply_markup=keyboard
+"""
         )
 
     except Exception as e:
@@ -622,10 +702,8 @@ def admin_messages(message):
             f"✅ Broadcast sent to {success} users"
         )
 
-# ================= APPROVE PAYMENT =================
-
-@bot.message_handler(commands=['approve'])
-def approve(message):
+@bot.message_handler(commands=['decline'])
+def decline(message):
 
     if message.from_user.id != ADMIN_ID:
         return
@@ -635,17 +713,13 @@ def approve(message):
 
         bot.send_message(
             user_id,
-            """
-✅ Payment Approved
-
-💎 Subscription Activated Successfully.
-"""
+            "❌ Payment Declined\n\nPlease contact admin if payment was successful."
         )
 
-        bot.reply_to(message, "Approved Successfully")
+        bot.reply_to(message, "Declined Successfully")
 
     except:
-        bot.reply_to(message, "Use:\n/approve USER_ID")
+        bot.reply_to(message, "Use:\n/decline USER_ID")
 
 
 # ================= DECLINE PAYMENT =================
@@ -661,44 +735,12 @@ def decline(message):
 
         bot.send_message(
             user_id,
-            """
-❌ Payment Declined
-
-Please contact admin if payment was successful.
-"""
+            "❌ Payment Declined\n\nPlease contact admin if payment was successful."
         )
 
         bot.reply_to(message, "Declined Successfully")
 
     except:
         bot.reply_to(message, "Use:\n/decline USER_ID")
-
-print("🎁 ClaimKart Bot Running...")
-
-# ================= PAYMENT SCREENSHOT =================
-
-@bot.message_handler(content_types=['photo'])
-def payment_screenshot(message):
-
-    if message.from_user.id == ADMIN_ID:
-        return
-
-    caption = f"""
-💰 New Payment Screenshot
-
-👤 User : {message.from_user.first_name}
-🆔 ID : {message.from_user.id}
-"""
-
-    bot.send_photo(
-        ADMIN_ID,
-        message.photo[-1].file_id,
-        caption=caption
-    )
-
-    bot.reply_to(
-        message,
-        "✅ Screenshot received.\nWaiting for admin approval."
-    )
 
 bot.infinity_polling()
