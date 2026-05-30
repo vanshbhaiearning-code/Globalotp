@@ -409,12 +409,21 @@ def subscription(call):
 
 
 @bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
+@bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
 def sub_month(call):
 
-    bot.send_message(
-        call.message.chat.id,
-        "✅ 1 Month Button Working"
-    )
+    try:
+        bot.send_photo(
+            call.message.chat.id,
+            open("qr.jpg", "rb"),
+            caption="TEST QR"
+        )
+
+    except Exception as e:
+        bot.send_message(
+            call.message.chat.id,
+            f"ERROR:\n{e}"
+        )
 
 
 @bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
