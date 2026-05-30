@@ -407,30 +407,113 @@ def subscription(call):
         reply_markup=keyboard
     )
 
+
+# ================= 1 MONTH =================
+
 @bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
 def sub_month(call):
 
+    bot.answer_callback_query(call.id)
+
+    keyboard = InlineKeyboardMarkup()
+
+    keyboard.add(
+        InlineKeyboardButton(
+            "💳 Pay Now",
+            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=199&cu=INR"
+        )
+    )
+
     try:
+
         bot.send_photo(
             call.message.chat.id,
             open("qr.jpg", "rb"),
-            caption="TEST QR"
+            caption="""
+💎 1 Month Subscription
+
+💰 Amount : ₹199
+
+🏦 UPI ID :
+kathikathi@ptyes
+
+━━━━━━━━━━━━━━
+
+1️⃣ Scan QR Code
+
+2️⃣ Or Click Pay Now
+
+3️⃣ Complete Payment
+
+4️⃣ Send Screenshot Here
+
+5️⃣ Wait For Admin Approval
+
+━━━━━━━━━━━━━━
+""",
+            reply_markup=keyboard
         )
 
     except Exception as e:
+
         bot.send_message(
             call.message.chat.id,
-            f"ERROR:\n{e}"
+            f"❌ Error:\n{e}"
         )
 
-@bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
+
+# ================= LIFETIME =================
+
 @bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
 def sub_lifetime(call):
 
-    bot.send_message(
-        call.message.chat.id,
-        "✅ Lifetime Button Working"
+    bot.answer_callback_query(call.id)
+
+    keyboard = InlineKeyboardMarkup()
+
+    keyboard.add(
+        InlineKeyboardButton(
+            "💳 Pay Now",
+            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=1000&cu=INR"
+        )
     )
+
+    try:
+
+        bot.send_photo(
+            call.message.chat.id,
+            open("qr.jpg", "rb"),
+            caption="""
+♾ Lifetime Subscription
+
+💰 Amount : ₹1000
+
+🏦 UPI ID :
+kathikathi@ptyes
+
+━━━━━━━━━━━━━━
+
+1️⃣ Scan QR Code
+
+2️⃣ Or Click Pay Now
+
+3️⃣ Complete Payment
+
+4️⃣ Send Screenshot Here
+
+5️⃣ Wait For Admin Approval
+
+━━━━━━━━━━━━━━
+""",
+            reply_markup=keyboard
+        )
+
+    except Exception as e:
+
+        bot.send_message(
+            call.message.chat.id,
+            f"❌ Error:\n{e}"
+        )
 
 # ================= ADMIN PANEL =================
 
