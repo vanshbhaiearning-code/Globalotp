@@ -673,6 +673,8 @@ Thank you for purchasing.
 @bot.message_handler(commands=['decline'])
 def decline(message):
 
+    bot.reply_to(message, "Decline command received")
+
     if message.from_user.id != ADMIN_ID:
         return
 
@@ -681,12 +683,11 @@ def decline(message):
 
         bot.send_message(
             user_id,
-            "❌ Payment Declined\n\nPlease contact admin if payment was successful."
+            "❌ Payment Declined"
         )
 
         bot.reply_to(message, "Declined Successfully")
 
-    except:
-        bot.reply_to(message, "Use:\n/decline USER_ID")
-
+    except Exception as e:
+        bot.reply_to(message, f"Error: {e}")
 bot.infinity_polling()
