@@ -402,6 +402,8 @@ def subscription(call):
 
 📅 1 Month = ₹199
 ♾ Lifetime = ₹1000
+
+Get Earny access New Codes 🎁
 """,
         reply_markup=keyboard
     )
