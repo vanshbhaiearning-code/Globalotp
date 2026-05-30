@@ -411,62 +411,19 @@ def subscription(call):
 @bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
 def sub_month(call):
 
-    keyboard = InlineKeyboardMarkup()
-
-    keyboard.add(
-        InlineKeyboardButton(
-            "💳 Pay Now",
-            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=199&cu=INR"
-        )
-    )
-
-    bot.send_photo(
+    bot.send_message(
         call.message.chat.id,
-        open("qr.jpg", "rb"),
-        caption="""
-💎 1 Month Subscription
-
-💰 Amount: ₹199
-🏦 UPI ID:
-kathikathi@ptyes
-
-1️⃣ Scan QR or click Pay Now
-2️⃣ Complete Payment
-3️⃣ Send Screenshot Here
-4️⃣ Wait For Admin Approval
-""",
-        reply_markup=keyboard
+        "✅ 1 Month Button Working"
     )
 
 
 @bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
+@bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
 def sub_lifetime(call):
 
-    keyboard = InlineKeyboardMarkup()
-
-    keyboard.add(
-        InlineKeyboardButton(
-            "💳 Pay Now",
-            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=1000&cu=INR"
-        )
-    )
-
-    bot.send_photo(
+    bot.send_message(
         call.message.chat.id,
-        open("qr.jpg", "rb"),
-        caption="""
-♾ Lifetime Subscription
-
-💰 Amount: ₹1000
-🏦 UPI ID:
-kathikathi@ptyes
-
-1️⃣ Scan QR or click Pay Now
-2️⃣ Complete Payment
-3️⃣ Send Screenshot Here
-4️⃣ Wait For Admin Approval
-""",
-        reply_markup=keyboard
+        "✅ Lifetime Button Working"
     )
 
 # ================= ADMIN PANEL =================
