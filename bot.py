@@ -383,31 +383,88 @@ def refer(call):
 @bot.callback_query_handler(func=lambda call: call.data == "subscription")
 def subscription(call):
 
-    keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard = InlineKeyboardMarkup(row_width=2)
 
     keyboard.add(
         InlineKeyboardButton(
-            "💳 Buy Now",
-            url="https://your-payment-link.com"
+            "📅 1 Month ₹199",
+            callback_data="sub_1month"
+        ),
+        InlineKeyboardButton(
+            "♾ Lifetime ₹1000",
+            callback_data="sub_lifetime"
         )
     )
 
     bot.send_message(
         call.message.chat.id,
         """
-💎 Premium Subscription
+💎 Choose Subscription Plan
 
-📅 1 Month = ₹99
-📅 3 Months = ₹249
-📅 Lifetime = ₹499
+📅 1 Month = ₹199
+♾ Lifetime = ₹1000
+""",
+        reply_markup=keyboard
+    )
 
-✅ Premium Benefits:
-• Unlimited Voucher Access
-• Premium Codes
-• Fast Updates
-• Priority Support
 
-Click below to purchase.
+@bot.callback_query_handler(func=lambda call: call.data == "sub_1month")
+def sub_month(call):
+
+    keyboard = InlineKeyboardMarkup()
+
+    keyboard.add(
+        InlineKeyboardButton(
+            "💳 Pay Now",
+            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=199&cu=INR"
+        )
+    )
+
+    bot.send_photo(
+        call.message.chat.id,
+        open("qr.jpg", "rb"),
+        caption="""
+💎 1 Month Subscription
+
+💰 Amount: ₹199
+🏦 UPI ID:
+kathikathi@ptyes
+
+1️⃣ Scan QR or click Pay Now
+2️⃣ Complete Payment
+3️⃣ Send Screenshot Here
+4️⃣ Wait For Admin Approval
+""",
+        reply_markup=keyboard
+    )
+
+
+@bot.callback_query_handler(func=lambda call: call.data == "sub_lifetime")
+def sub_lifetime(call):
+
+    keyboard = InlineKeyboardMarkup()
+
+    keyboard.add(
+        InlineKeyboardButton(
+            "💳 Pay Now",
+            url="upi://pay?pa=kathikathi@ptyes&pn=ClaimKart&am=1000&cu=INR"
+        )
+    )
+
+    bot.send_photo(
+        call.message.chat.id,
+        open("qr.jpg", "rb"),
+        caption="""
+♾ Lifetime Subscription
+
+💰 Amount: ₹1000
+🏦 UPI ID:
+kathikathi@ptyes
+
+1️⃣ Scan QR or click Pay Now
+2️⃣ Complete Payment
+3️⃣ Send Screenshot Here
+4️⃣ Wait For Admin Approval
 """,
         reply_markup=keyboard
     )
@@ -519,6 +576,83 @@ def admin_messages(message):
             f"✅ Broadcast sent to {success} users"
         )
 
+# ================= APPROVE PAYMENT =================
+
+@bot.message_handler(commands=['approve'])
+def approve(message):
+
+    if message.from_user.id != ADMIN_ID:
+        return
+
+    try:
+        user_id = int(message.text.split()[1])
+
+        bot.send_message(
+            user_id,
+            """
+✅ Payment Approved
+
+💎 Subscription Activated Successfully.
+"""
+        )
+
+        bot.reply_to(message, "Approved Successfully")
+
+    except:
+        bot.reply_to(message, "Use:\n/approve USER_ID")
+
+
+# ================= DECLINE PAYMENT =================
+
+@bot.message_handler(commands=['decline'])
+def decline(message):
+
+    if message.from_user.id != ADMIN_ID:
+        return
+
+    try:
+        user_id = int(message.text.split()[1])
+
+        bot.send_message(
+            user_id,
+            """
+❌ Payment Declined
+
+Please contact admin if payment was successful.
+"""
+        )
+
+        bot.reply_to(message, "Declined Successfully")
+
+    except:
+        bot.reply_to(message, "Use:\n/decline USER_ID")
+
 print("🎁 ClaimKart Bot Running...")
+
+# ================= PAYMENT SCREENSHOT =================
+
+@bot.message_handler(content_types=['photo'])
+def payment_screenshot(message):
+
+    if message.from_user.id == ADMIN_ID:
+        return
+
+    caption = f"""
+💰 New Payment Screenshot
+
+👤 User : {message.from_user.first_name}
+🆔 ID : {message.from_user.id}
+"""
+
+    bot.send_photo(
+        ADMIN_ID,
+        message.photo[-1].file_id,
+        caption=caption
+    )
+
+    bot.reply_to(
+        message,
+        "✅ Screenshot received.\nWaiting for admin approval."
+    )
 
 bot.infinity_polling()
