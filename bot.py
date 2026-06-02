@@ -3,7 +3,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 import time
 
-TOKEN = "8479393909:AAF0ezFYoKMzO8xUNQqfsAmjlAp92zHuCi4"
+TOKEN = "8479393909:AAGoGKeCtD3ftEFS4lDprDNdgQ7jVi3vySg"
 
 ADMIN_ID = 6692986333
 
